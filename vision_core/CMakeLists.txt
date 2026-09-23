@@ -13,6 +13,26 @@ find_package(geometry_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(image_transport REQUIRED)
 
+find_package(OpenCV REQUIRED)
+
+add_executable(image_processor_node src/cv_mat_memory.cpp)
+
+ament_target_dependencies(image_processor_node
+rclcpp
+sensor_msgs
+geometry_msgs
+cv_bridge
+image_transport
+)
+
+target_link_libraries(image_processor_node ${OpenCV_LIBRARIES})
+
+
+install(TARGETS
+  image_processor_node
+  DESTINATION lib/${PROJECT_NAME}
+  )
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   # the following line skips the linter which checks for copyrights
@@ -24,5 +44,7 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+
 
 ament_package()
