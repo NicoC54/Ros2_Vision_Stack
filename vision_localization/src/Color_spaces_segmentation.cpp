@@ -17,7 +17,6 @@ int main(){
     cv::Mat image_hsv;
 
     cv::cvtColor(image_bgr, image_hsv, cv::COLOR_BGR2HSV);
-    cv::imshow("Test_balle",image_hsv);
 
     cv::Scalar limite_basse1(0,120,70);
     cv::Scalar limite_haute1(10,255,255);
@@ -32,19 +31,14 @@ int main(){
 
     cv::bitwise_or(masque1,masque2,masque_final);
 
+    cv::namedWindow("image originale bgr", cv::WINDOW_NORMAL);
     cv::imshow("image originale bgr", image_bgr);
+
+    cv::namedWindow("image hsv", cv::WINDOW_NORMAL);
     cv::imshow("image hsv", image_hsv);
+    
+    cv::namedWindow("masque rouge final", cv::WINDOW_NORMAL);
     cv::imshow("masque rouge final", masque_final);
-
-    cv::waitKey(0);
-
-
-
-
-
-
-
-
 
     cv::waitKey(0);
 
