@@ -16,7 +16,8 @@ find_package(tf2_ros REQUIRED)
 
 find_package(OpenCV REQUIRED)
 
-add_executable(color_and_segmentation src/Color_spaces_segmentation.cpp)
+add_executable(color_and_segmentation src/color_spaces_segmentation.cpp)
+add_executable(morphological_transformations src/morphological_transformations.cpp)
 
 ament_target_dependencies(
 color_and_segmentation
@@ -28,16 +29,33 @@ tf2
 tf2_ros
 )
 
+ament_target_dependencies(
+morphological_transformations
+rclcpp
+sensor_msgs
+cv_bridge
+geometry_msgs
+tf2
+tf2_ros
+)
+
+
 target_include_directories(color_and_segmentation PUBLIC
   ${OpenCV_INCLUDE_DIRS}
 )
 
+target_include_directories(morphological_transformations PUBLIC
+  ${OpenCV_INCLUDE_DIRS}
+)
+
 target_link_libraries(color_and_segmentation ${OpenCV_LIBRARIES})
+target_link_libraries(morphological_transformations ${OpenCV_LIBRARIES})
 
 
 
 INSTALL(TARGETS
 color_and_segmentation
+morphological_transformations
 DESTINATION lib/${PROJECT_NAME}
 )
 
