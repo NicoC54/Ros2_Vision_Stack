@@ -3,8 +3,10 @@
 
 int main(){
 
+    //lecture et enregistrement de l'image balle_rouge dans image_bgr
     cv::Mat image_bgr = cv::imread("/home/nico/vision_ws/src/ros2_vision_stack/vision_localization/balle_rouge.jpg");
 
+    //sécurité
     if (image_bgr.empty()){
         std::cerr << "Erreur:Image introuvable !" << std::endl;
         return -1;
@@ -14,10 +16,13 @@ int main(){
         //cv::imshow("Test_balle",image_bgr);
     }
 
+    //création d'une image hsv(hue,saturation,value)
     cv::Mat image_hsv;
 
+    //conversion en image hsv
     cv::cvtColor(image_bgr, image_hsv, cv::COLOR_BGR2HSV);
 
+    //création des deux thresholds de couleur
     cv::Scalar limite_basse1(0,120,70);
     cv::Scalar limite_haute1(10,255,255);
 
@@ -26,11 +31,14 @@ int main(){
 
     cv::Mat masque1, masque2, masque_final;
 
+    //création des deux masques binaires = matrices noires-blanches
     cv::inRange(image_hsv, limite_basse1, limite_haute1, masque1);
     cv::inRange(image_hsv, limite_basse2, limite_haute2, masque2);
 
+    //opération mathématique ou
     cv::bitwise_or(masque1,masque2,masque_final);
 
+    //plot
     cv::namedWindow("image originale bgr", cv::WINDOW_NORMAL);
     cv::imshow("image originale bgr", image_bgr);
 
