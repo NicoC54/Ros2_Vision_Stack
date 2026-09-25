@@ -19,6 +19,7 @@ find_package(OpenCV REQUIRED)
 add_executable(color_and_segmentation src/color_spaces_segmentation.cpp)
 add_executable(morphological_transformations src/morphological_transformations.cpp)
 add_executable(spatial_extraction src/spatial_extraction.cpp)
+add_executable(aruco_marker src/aruco_marker.cpp)
 
 ament_target_dependencies(
 color_and_segmentation
@@ -49,6 +50,17 @@ geometry_msgs
 tf2
 tf2_ros
 )
+
+ament_target_dependencies(
+aruco_marker
+rclcpp
+sensor_msgs
+cv_bridge
+geometry_msgs
+tf2
+tf2_ros
+)
+
 
 
 target_include_directories(color_and_segmentation PUBLIC
@@ -61,18 +73,21 @@ target_include_directories(morphological_transformations PUBLIC
 target_include_directories(spatial_extraction PUBLIC
   ${OpenCV_INCLUDE_DIRS}
 )
-
+target_include_directories(aruco_marker PUBLIC
+  ${OpenCV_INCLUDE_DIRS}
+)
 
 target_link_libraries(color_and_segmentation ${OpenCV_LIBRARIES})
 target_link_libraries(morphological_transformations ${OpenCV_LIBRARIES})
 target_link_libraries(spatial_extraction ${OpenCV_LIBRARIES})
-
+target_link_libraries(aruco_marker ${OpenCV_LIBRARIES})
 
 
 INSTALL(TARGETS
 color_and_segmentation
 morphological_transformations
 spatial_extraction
+aruco_marker
 DESTINATION lib/${PROJECT_NAME}
 )
 
