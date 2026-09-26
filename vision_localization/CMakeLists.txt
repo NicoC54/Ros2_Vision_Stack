@@ -21,6 +21,7 @@ add_executable(morphological_transformations src/morphological_transformations.c
 add_executable(spatial_extraction src/spatial_extraction.cpp)
 add_executable(aruco_marker src/aruco_marker.cpp)
 add_executable(pnp src/pnp.cpp)
+add_executable(testing src/test.cpp)
 
 ament_target_dependencies(
 color_and_segmentation
@@ -64,6 +65,16 @@ tf2_ros
 
 ament_target_dependencies(
 pnp
+rclcpp
+sensor_msgs
+cv_bridge
+geometry_msgs
+tf2
+tf2_ros
+)
+
+ament_target_dependencies(
+testing
 rclcpp
 sensor_msgs
 cv_bridge
@@ -91,11 +102,20 @@ target_include_directories(pnp PUBLIC
   ${OpenCV_INCLUDE_DIRS}
 )
 
+target_include_directories(testing PUBLIC
+  ${OpenCV_INCLUDE_DIRS}
+)
+
+
+
+
+
 target_link_libraries(color_and_segmentation ${OpenCV_LIBRARIES})
 target_link_libraries(morphological_transformations ${OpenCV_LIBRARIES})
 target_link_libraries(spatial_extraction ${OpenCV_LIBRARIES})
 target_link_libraries(aruco_marker ${OpenCV_LIBRARIES})
 target_link_libraries(pnp ${OpenCV_LIBRARIES})
+target_link_libraries(testing ${OpenCV_LIBRARIES})
 
 
 INSTALL(TARGETS
@@ -104,6 +124,7 @@ morphological_transformations
 spatial_extraction
 aruco_marker
 pnp
+testing
 DESTINATION lib/${PROJECT_NAME}
 )
 
