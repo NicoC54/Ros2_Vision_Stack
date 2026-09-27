@@ -50,3 +50,29 @@ Point3D deprojecPixelto3D(int u, int v, uint16_t depth_mm, const CameraIntrinsic
     point.y = (v - intrinsics.cy) * point.z / intrinsics.fy;
     return point;
 }
+
+//Generate a PointCloud
+
+#include <vector>
+
+struct PointXYZRGB {float x,y,z; uint8_t r,g,b;};
+
+std::vector<PointXYZRGB> generatePointCloud(const cv::Mat& rgb, const cv::Mat& depth, const CameraIntrinsics& intr){
+    std::vector<PointXYZRGB> cloud;
+    cloud.reserve(rgb.rows * rgb.cols)
+
+    for (int v = 0; v < rgb.rows; ++v){
+        for (int u = 0; u < rgb.cols; ++u){
+            uint16_t d = depth.at<uint16_t>(v,u);
+            if (d==0) continue;
+
+            Point3D p3d = deprojectPixelTo3D(u ,v ,d , intr); // appel de la fonction du dessus
+
+            cv::Vec3b Color = rgb.at<cv::Vec3b> (v,u);
+
+            cv::Vec3b color = rgb.at<cv::Vec3b>(v,u);
+
+            cloud.push_back({p3d.x, p3d.y, p3d.z, color[2], color[1], color[0]})
+        }
+    }
+}
