@@ -40,7 +40,6 @@ for (int v=0; v<rgb.rows; v++){
         
     cloud.push_back({point.x, point.y, point.z, color[2], color[1], color[0]});
 
-
     }
 }
 
