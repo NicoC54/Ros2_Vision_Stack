@@ -30,7 +30,23 @@ void imageCallback(const sensor_msgs::msg::Image::SharedPtr msg){
     ] catch (cv::bridge::Exception& e) {
         RCLCPP_ERROR(rclcpp::get_logger("rclcpp"), "Erreur cv_bridge: %s", e.what());
     }
+}
 
 
+//Deprojection : from a pixel of a 2D depth image get the distance of the object from the camera in 3D Space 
 
+Struct Point3D {float x,y,z;};
+Struct CameraIntrinsics {float fx,fy,cx,cy;};
+
+Point3D deprojecPixelto3D(int u, int v, uint16_t depth_mm, const CameraIntrinsics& intrinsics){
+    Point3D point;
+    point.z = depth_mm/1000.0f;
+
+    if (point.z == 0.0){
+        return (0.0,0.0,0.0);
+    }
+
+    point.x = (u - intrinsics.cx) * point.z / intrinsics.fx;
+    point.y = (v - intrinsics.cy) * point.z / intrinsics.fy;
+    return point;
 }
