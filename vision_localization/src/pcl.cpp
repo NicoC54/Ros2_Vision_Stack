@@ -30,3 +30,40 @@ pcl::PointCloud<pcl::PointXYZ>::Ptr ApplyFilterVoxel(pcl::PointCloud<pcl::pointX
 
     return filtered_cloud;
 }
+
+// Segmentation du sol
+
+void extractGround(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud) {
+
+    auto ground_cloud = std::make_shared<pcl::PointCloud<pcl::PointXYZ>>();
+    auto obstacle_cloud = std::make_shared<pcl::PointCloud<pcl::PointXYZ>>();
+
+    auto coefficients = std::make_shared<pcl::ModelCoeffiocients>();
+    auto inliers = std::make_shared<pcl::PointIndices>();
+
+    pcl::SACSegmentation<pcl::PointXYZ> seg;
+    seg.setOptimizeCoefficients(true);
+    seg.setModelType(pcl::SACMODEL_PLANE);
+    seg.setMethodType(pcl::SAC_RANSAC);
+    seg.setInputCloud(cloud);
+    seg.setDistanceThreshold(0.015);
+
+    seg.segments(*inliers,*coefficients);
+
+    if (inliers->indices.empty()){
+        std::cerr << "RANSAC n'a pas pu trouver de plan géometrique" << std:: endl;
+        return;
+    }
+
+    pcl::ExtractIndices<pcl::PointXYZ> extract;
+    extract.setInputCloud(cloud);
+    extract.setIndices(inliers);
+
+    //garder le sol
+    extract.setNegative(false);
+    extract.filter(*ground_cloud);
+    
+    extract.setNegative(true);
+    extract.filter(*obstacle_ground);
+
+}
