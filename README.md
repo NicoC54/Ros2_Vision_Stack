@@ -1,11 +1,11 @@
-# 👁️️ ROS 2 Vision Stack : From Pixels to Point Clouds
+# ROS 2 Vision Stack : From Pixels to Point Clouds
 
 This repository serves as both a **comprehensive knowledge base** and a **practical C++ workspace** for Computer Vision in robotics. It bridges the gap between raw OpenCV image processing and advanced 3D spatial localization within the ROS 2 ecosystem.
 
-## 🎯 Purpose
+## Purpose
 As a Robotics Engineer, I built this repository to systematically document and implement the complete computer vision pipeline: starting from basic memory management of images to advanced 3D Point Cloud manipulation and Perspective-n-Point (PnP) algorithms.
 
-## 📂 Workspace Architecture
+## Workspace Architecture
 
 This workspace is divided into two main ROS 2 packages:
 
@@ -21,10 +21,10 @@ Focuses on extracting actionable 3D data and robotic pose estimation from 2D ima
 * **Fiducial Markers & Pose Estimation:** Detecting ArUco markers and computing 6D poses using the PnP (Perspective-n-Point) algorithm.
 * **3D Vision:** Integrating Depth cameras, Point Cloud Library (PCL) processing, and conceptual bridges to Visual SLAM.
 
-## 📖 Documentation & Theory
+## Documentation & Theory
 I strongly believe in understanding the math behind the code. Each module is accompanied by detailed Markdown documentation (in the `/documentation` folders) covering the theoretical concepts, limitations, and mathematical foundations of the algorithms used before they are implemented in C++.
 
-## 🚀 Technologies Used
+## Technologies Used
 * **C++17 / ROS 2**
 * **OpenCV**
 * **PCL (Point Cloud Library)**
